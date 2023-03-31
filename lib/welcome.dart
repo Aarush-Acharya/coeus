@@ -49,36 +49,41 @@ class _WelcomeState extends State<Welcome> {
     }
   }
 
-  late Map<String, String> json;
+  late Map<String, dynamic> json;
   Future<void> fetchdata(String text) async {
     final response = await http.post(
       Uri.parse(
-          'http://10.12.48.157:5000/api/generate-answer'),
+          'https://backend-production-2203.up.railway.app/api/generate-answer'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'query': text.toString(),
+      body: jsonEncode(<String, dynamic>{
+        'query': text,
       }),
     );
     json = jsonDecode(response.body);
-    print(json);
+    print(json['response'].toString());
   }
 
-  late Map<String, String> ijson;
+  late Map<String, dynamic> ijson;
   Future<void> upload(String filename) async {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            "https://10.12.48.157:5000/api/image-process"));
-
+            "https://backend-production-2203.up.railway.app/api/image-process"));
+    print("Here________________________________________________");
+    print(filename);
     request.files.add(http.MultipartFile(
         'file',
-        File(_fileName.toString()).readAsBytes().asStream(),
+        File(filename.toString()).readAsBytes().asStream(),
         File(filename).lengthSync(),
         filename: "data.jpeg"));
+    print("added");
     var res = await request.send();
+    print("got it");
+    print(await res.stream.bytesToString());
     ijson = jsonDecode(await res.stream.bytesToString());
+    print("alright");
   }
 
   @override
@@ -248,7 +253,8 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             ElevatedButton.icon(
                               onPressed: () async {
-                                await upload(_fileName!);
+                                await upload(pickedfile!.path!);
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         responseScreen(

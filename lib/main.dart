@@ -156,20 +156,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
   final XFile image;
-  late Map<String, String> ijson;
+  late Map<String, dynamic> ijson;
   DisplayPictureScreen({super.key, required this.image});
 
   Future<void> upload() async {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            "https://10.12.48.157:5000/api/image-process"));
-  
+            "https://backend-production-2203.up.railway.app/api/image-process"));
+
     request.files.add(http.MultipartFile(
         'file', image.readAsBytes().asStream(), await image.length(),
         filename: "data.jpeg"));
     var res = await request.send();
     ijson = jsonDecode(await res.stream.bytesToString());
+    print(ijson);
   }
 
   // void fetchdata() async {
@@ -208,11 +209,10 @@ class DisplayPictureScreen extends StatelessWidget {
         child: ElevatedButton.icon(
           onPressed: () async {
             await upload();
-              Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        responseScreen(
-                                          text: ijson['response'].toString(),
-                                        )));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => responseScreen(
+                      text: ijson['response'].toString(),
+                    )));
           },
           icon: const Icon(
             Icons.upload_file_sharp,

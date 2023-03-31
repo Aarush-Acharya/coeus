@@ -19,8 +19,8 @@ class responseScreen extends StatefulWidget {
   @override
   State<responseScreen> createState() => _responseScreenState();
 }
-class _responseScreenState extends State<responseScreen> {
 
+class _responseScreenState extends State<responseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +67,7 @@ class _responseScreenState extends State<responseScreen> {
                   width: (MediaQuery.of(context).size.width) * 1 / 1.59,
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         "Solution for Ya'",
                         style: TextStyle(
                             fontSize: 60,
@@ -82,22 +82,23 @@ class _responseScreenState extends State<responseScreen> {
                       Text(
                           "Providing a highly tested and well accepted solution"),
                       SizedBox(
-                        height: 100,
+                        height: (MediaQuery.of(context).size.width) * 1 / 8,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 270,
+                          left: (MediaQuery.of(context).size.width) * 1 / 7,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: 600,
+                              width:
+                                  (MediaQuery.of(context).size.width) * 1 / 1.8,
                               child: Text(
                                 // textAlign: TextAlign.center,
-                               widget.text,
+                                widget.text,
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 13,
                                   fontFamily: "Mukta",
                                   height: 1.5,
                                   fontStyle: FontStyle.normal,
