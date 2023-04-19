@@ -61,6 +61,7 @@ class _WelcomeState extends State<Welcome> {
         'query': text,
       }),
     );
+    print(response.body);
     json = jsonDecode(response.body);
     print(json['response'].toString());
   }
@@ -120,7 +121,7 @@ class _WelcomeState extends State<Welcome> {
               sigmaY: 10,
             ),
           )),
-          RiveAnimation.asset(
+          const RiveAnimation.asset(
             'RiveAsset/shapes.riv',
           ),
           Positioned(
@@ -129,7 +130,7 @@ class _WelcomeState extends State<Welcome> {
               sigmaX: 30,
               sigmaY: 30,
             ),
-            child: SizedBox(
+            child: const SizedBox(
                 // height: 10,
                 ),
           )),
@@ -145,7 +146,7 @@ class _WelcomeState extends State<Welcome> {
                   });
                 },
                 controller: _controller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     // labelText: 'Type it out',
                     hintText: 'Type it out'),
                 onSubmitted: (String value) async {
@@ -204,7 +205,7 @@ class _WelcomeState extends State<Welcome> {
                     fontWeight: FontWeight.w700),
               ), // <-- Text
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             isLoading
@@ -228,7 +229,7 @@ class _WelcomeState extends State<Welcome> {
             if (pickedfile != null)
               // SizedBox
               //     width: 400, height: 300, child: Image.file(fileToDisplay!)),
-              SizedBox(height: 40, width: 20),
+              const SizedBox(height: 40, width: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -266,7 +267,7 @@ class _WelcomeState extends State<Welcome> {
                               ),
                               label: Text('Submit'), // <-- Text
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             )
                           ])
@@ -283,7 +284,7 @@ class _WelcomeState extends State<Welcome> {
                 SizedBox(
                   width: (MediaQuery.of(context).size.width) * 1 / 1.59,
                   child: Column(
-                    children: [
+                    children: const [
                       Text(
                         "Welcome to Coeus",
                         style: TextStyle(
