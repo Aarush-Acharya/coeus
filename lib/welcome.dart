@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:coeus/loading.dart';
 import 'package:coeus/response_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:rive/rive.dart';
 import 'package:http/http.dart' as http;
 import 'main.dart';
@@ -37,11 +39,14 @@ class _WelcomeState extends State<Welcome> {
         allowMultiple: false,
       );
       if (result != null) {
+        pickedfile = result!.files.single;
+
         _fileName = result!.files.first.name;
-        pickedfile = result!.files.first;
-        // fileToDisplay = File(pickedfile!.path!);
+
+        // Uint8List? bytes = result!.files.single.bytes;
+        // String filename = basename(result!.files.single.name);
       }
-      print("File name $_fileName");
+      print("File name $pickedfile");
       setState(() {
         isLoading = false;
       });
@@ -68,17 +73,17 @@ class _WelcomeState extends State<Welcome> {
   }
 
   late Map<String, dynamic> ijson;
-  Future<void> upload(String filename) async {
+  Future<void> upload(Uint8List bytes) async {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
             "https://flask-production-5cb1.up.railway.app/api/image-process"));
     print("Here________________________________________________");
-    print(filename);
+    
     request.files.add(http.MultipartFile(
         'file',
-        File(filename.toString()).readAsBytes().asStream(),
-        File(filename).lengthSync(),
+        http.ByteStream.fromBytes(bytes),
+        bytes.length,
         filename: "data.jpeg"));
     print("added");
     var res = await request.send();
@@ -168,8 +173,7 @@ class _WelcomeState extends State<Welcome> {
                                 Navigator.pop(context);
                                 _controller.clear();
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        load(
+                                    builder: (BuildContext context) => load(
                                           text: json['response'].toString(),
                                         )));
                               },
@@ -255,11 +259,10 @@ class _WelcomeState extends State<Welcome> {
                             ),
                             ElevatedButton.icon(
                               onPressed: () async {
-                                await upload(pickedfile!.path!);
+                                await upload(pickedfile!.bytes!);
                                 // ignore: use_build_context_synchronously
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        load(
+                                    builder: (BuildContext context) => load(
                                           text: ijson['response'].toString(),
                                         )));
                               },
