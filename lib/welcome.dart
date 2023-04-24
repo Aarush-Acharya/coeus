@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
+import 'package:coeus/loading.dart';
 import 'package:coeus/response_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _WelcomeState extends State<Welcome> {
   Future<void> fetchdata(String text) async {
     final response = await http.post(
       Uri.parse(
-          'https://backend-production-2203.up.railway.app/api/generate-answer'),
+          'https://flask-production-5cb1.up.railway.app/api/generate-answer'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -71,7 +72,7 @@ class _WelcomeState extends State<Welcome> {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            "https://backend-production-2203.up.railway.app/api/image-process"));
+            "https://flask-production-5cb1.up.railway.app/api/image-process"));
     print("Here________________________________________________");
     print(filename);
     request.files.add(http.MultipartFile(
@@ -168,7 +169,7 @@ class _WelcomeState extends State<Welcome> {
                                 _controller.clear();
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        responseScreen(
+                                        load(
                                           text: json['response'].toString(),
                                         )));
                               },
@@ -258,7 +259,7 @@ class _WelcomeState extends State<Welcome> {
                                 // ignore: use_build_context_synchronously
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        responseScreen(
+                                        load(
                                           text: ijson['response'].toString(),
                                         )));
                               },

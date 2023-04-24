@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
+import 'package:coeus/loading.dart';
 import 'package:coeus/response_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:coeus/splash_page.dart';
@@ -210,7 +211,7 @@ class DisplayPictureScreen extends StatelessWidget {
           onPressed: () async {
             await upload();
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => responseScreen(
+                builder: (BuildContext context) => load(
                       text: ijson['response'].toString(),
                     )));
           },

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -44,14 +43,17 @@ class _responseScreenState extends State<responseScreen> {
               sigmaY: 10,
             ),
           )),
-          RiveAnimation.asset(
-            'RiveAsset/bub.riv',
+          Padding(
+            padding: EdgeInsets.only(left: 700, top: 200),
+            child: RiveAnimation.asset(
+              'RiveAsset/ok.riv',
+            ),
           ),
           Positioned(
               child: BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: 30,
-              sigmaY: 30,
+              sigmaX: 10,
+              sigmaY: 10,
             ),
             child: SizedBox(
                 // height: 10,
